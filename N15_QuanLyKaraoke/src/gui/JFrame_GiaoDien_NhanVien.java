@@ -43,6 +43,8 @@ public class JFrame_GiaoDien_NhanVien extends javax.swing.JFrame {
 //	private JPanel_ThanhToanHoaDon thanhToanHoaDon;
 //	private JPanel_TraCuuHoaDon traCuuHoaDon;
 	private NhanVien nv;
+
+private JPanel_DanhMucKhachHang khachHang;
     /**
      * Creates new form JFrame_GiaoDienChinh
      */
@@ -53,6 +55,7 @@ public class JFrame_GiaoDien_NhanVien extends javax.swing.JFrame {
         
         trangChu = new JPanel_TrangChu();
         phongHat = new JPanel_DanhMucPhong();
+        khachHang = new JPanel_DanhMucKhachHang();
         traCuuDichVu = new JPanel_TraCuuDichVu();
         traCuuPhongHat = new JPanel_TraCuuPhong();
 //        thanhToanHoaDon = new JPanel_ThanhToanHoaDon();
@@ -63,6 +66,7 @@ public class JFrame_GiaoDien_NhanVien extends javax.swing.JFrame {
         
         mainPanel.add(trangChu, "Trang chủ");
         mainPanel.add(phongHat, "Danh mục phòng hát");
+        mainPanel.add(khachHang , "Danh mục khách hàng");
         mainPanel.add(traCuuDichVu, "Tra cứu dịch vụ");
         mainPanel.add(traCuuPhongHat, "Tra cứu phòng hát");
 //        mainPanel.add(thanhToanHoaDon, "Thanh toán hoá đơn");
@@ -149,6 +153,8 @@ public class JFrame_GiaoDien_NhanVien extends javax.swing.JFrame {
             	  menuDoanhThu.setBackground(Color.white);
             	
             	  menuDoanhThuTheoNgay.setBackground(Color.white);
+            	  
+            	  cardLayout.show(mainPanel, "Danh mục khách hàng");
             	 
               }
           });
