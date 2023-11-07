@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class TaiKhoan_DAO {
 //		PreparedStatement stmt = null;
 		TaiKhoan tk = new TaiKhoan();
 		try {
-			ConnectDB.getInstance();
+//			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
 			String sql = "select TenDangNhap, MatKhau, tk.MaNhanVien from tbl_TaiKhoan tk join tbl_NhanVien nv on tk.MaNhanVien = nv.MaNhanVien where TenDangNhap ='"+tenDN+"'";
 			Statement stmt = con.createStatement();

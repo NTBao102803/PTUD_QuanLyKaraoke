@@ -135,9 +135,7 @@ public class JPanel_DanhMucPhong extends javax.swing.JPanel {
 		for (LoaiPhong lp : listLoaiPhong) {
 			jComboBoxLoaiPhong.addItem(lp.getTenLoaiPhong());
 		}
-        
-        
-        
+       
         
         jTextFieldGiaPhong.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -433,6 +431,7 @@ public class JPanel_DanhMucPhong extends javax.swing.JPanel {
 		return new PhongHat(ma, tenPhong, new LoaiPhong(maLoaiPhong, loai), gia, tt, sucChua);
 		
 	}
+	
 	// cập nhật 1 phòng
 	public PhongHat update_Phong(String ma) {
 		String tenPhong = jTextFieldTenPhong.getText().trim();
@@ -441,9 +440,11 @@ public class JPanel_DanhMucPhong extends javax.swing.JPanel {
 		String tt = jComboBoxTinhTrang.getSelectedItem().toString();
 		double gia = Float.parseFloat(jTextFieldGiaPhong.getText());
 		int sucChua = Integer.parseInt(jComboBoxSucChua.getSelectedItem().toString());
+		
 		return new PhongHat(ma, tenPhong, new LoaiPhong(maLoaiPhong, loai), gia, tt, sucChua);
 		
 	}
+	
     // kiểm tra thông tin nhập vào 
     public boolean validDataPhong() {
 		// TODO Auto-generated method stub

@@ -4,16 +4,18 @@
  */
 package gui;
 import javax.swing.GroupLayout.Alignment;
-
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import connectDB.ConnectDB;
-//import dao.KhachHang_DAO;
-//import entity.DichVu;
-//import entity.KhachHang;
+import dao.KhachHang_DAO;
+import entity.DichVu;
+import entity.KhachHang;
 import entity.LoaiPhong;
 import entity.PhongHat;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
@@ -24,27 +26,28 @@ import javax.swing.ButtonModel;
 import javax.swing.GroupLayout;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.plaf.ColorChooserUI;
 
 /**
  *
  * @author ADMIN
  */
 public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
-//	   private KhachHang_DAO khachHang_dao;
-//		private ArrayList<KhachHang> listKhachHang;
-//		private DefaultTableModel model_KhachHang;
+	   private KhachHang_DAO khachHang_dao;
+		private ArrayList<KhachHang> listKhachHang;
+		private DefaultTableModel model_KhachHang;
 
     /**
      * Creates new form quanlyKH
      */
     public JPanel_DanhMucKhachHang() {
-//    	try {
-//			ConnectDB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//		}
-//		khachHang_dao = new KhachHang_DAO();
+    	try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		khachHang_dao = new KhachHang_DAO();
         initComponents();
     }
 
@@ -167,7 +170,7 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
         
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                addnew_KhachHang();
+                addnew_KhachHang();
             }
         });
 
@@ -179,7 +182,7 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
         btnCapNhat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-//            	edit_KhachHang();
+            	edit_KhachHang();
             }
         });
 
@@ -275,7 +278,7 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
 
         tblDSKhachHang.setAutoCreateRowSorter(true);
         tblDSKhachHang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tblDSKhachHang.setModel(new DefaultTableModel(
+        tblDSKhachHang.setModel(model_KhachHang = new DefaultTableModel(
         	new Object[][] {
         		{null, null, null, null, null, null},
         		{null, null, null, null, null, null},
@@ -318,6 +321,11 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
         	public Class getColumnClass(int columnIndex) {
         		return columnTypes[columnIndex];
         	}
+        	
+        	@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Không cho phép chỉnh sửa bất kỳ ô nào trên bảng
+			}
         });
         tblDSKhachHang.setToolTipText("danh sách khách hàng");
         tblDSKhachHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -326,7 +334,11 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
         tblDSKhachHang.setShowGrid(true);
         jScrollPane2.setViewportView(tblDSKhachHang);
         
-//        loadKhachHang();
+        JTableHeader header_font = tblDSKhachHang.getTableHeader();
+		Font f = new Font("Arial", Font.BOLD, 13);
+		header_font.setFont(f);
+        
+        loadKhachHang();
         
         tblDSKhachHang.addMouseListener(new MouseListener() {
 			
@@ -357,21 +369,21 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-//				int pos = tblDSKhachHang.getSelectedRow();
-//				txtMaKH.setText(model_KhachHang.getValueAt(pos, 0).toString());
-//				txtMaKH.setEnabled(false);
-//				txtTenKH.setText(model_KhachHang.getValueAt(pos, 1).toString());
-//				txtSoDienThoai.setText(model_KhachHang.getValueAt(pos, 2).toString());
-//				txtCCCD.setText(model_KhachHang.getValueAt(pos, 3).toString());
-//				String genderValue =  (String) model_KhachHang.getValueAt(pos, 4);
-//				if (genderValue == "Nam") {
-//				    buttonGroup1.setSelected(radNam.getModel(), true); 
-//				} else if (genderValue == "Nữ") {
-//				    buttonGroup1.setSelected(radNu.getModel(), true); 
-//				}
-//				txtDiaChi.setText(model_KhachHang.getValueAt(pos, 5).toString());
-//				
-//				txtTenKH.requestFocus();
+				int pos = tblDSKhachHang.getSelectedRow();
+				txtMaKH.setText(model_KhachHang.getValueAt(pos, 0).toString());
+				txtMaKH.setEnabled(false);
+				txtTenKH.setText(model_KhachHang.getValueAt(pos, 1).toString());
+				txtSoDienThoai.setText(model_KhachHang.getValueAt(pos, 2).toString());
+				txtCCCD.setText(model_KhachHang.getValueAt(pos, 3).toString());
+				String genderValue =  (String) model_KhachHang.getValueAt(pos, 4);
+				if (genderValue == "Nam") {
+				    buttonGroup1.setSelected(radNam.getModel(), true); 
+				} else if (genderValue == "Nữ") {
+				    buttonGroup1.setSelected(radNu.getModel(), true); 
+				}
+				txtDiaChi.setText(model_KhachHang.getValueAt(pos, 5).toString());
+				
+				txtTenKH.requestFocus();
 			}
 
 		});
@@ -446,55 +458,52 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
     }//GEN-LAST:event_txtDiaChiActionPerformed
 
     // load khách hàng lên bảng
-//    public void loadKhachHang() {
-//    	String gioitinh = "";
-//    	model_KhachHang.setRowCount(0);
-//		listKhachHang = khachHang_dao.getAllKhachHang();
-//		for (KhachHang kh : listKhachHang) {
-//			if(kh.getGioiTinh() == 1) {
-//				gioitinh = "Nam";
-//			}else {
-//				gioitinh = "Nữ";
-//			}
-//			model_KhachHang.addRow(new Object[] { 
-//					kh.getMaKhachHang(), kh.getTenKhachHang(), kh.getSoDienThoai(), kh.getCCCD(),
-//					gioitinh, kh.getDiaChi()});
-//		}
-//	}
+    public void loadKhachHang() {
+    	String gioitinh = "";
+    	model_KhachHang.setRowCount(0);
+		listKhachHang = khachHang_dao.getAllKhachHang();
+		for (KhachHang kh : listKhachHang) {
+			if(kh.getGioiTinh() == 1) {
+				gioitinh = "Nam";
+			}else {
+				gioitinh = "Nữ";
+			}
+			model_KhachHang.addRow(new Object[] { 
+					kh.getMaKhachHang(), kh.getTenKhachHang(), kh.getSoDienThoai(), kh.getCCCD(),
+					gioitinh, kh.getDiaChi()});
+		}
+	}
     
- // thêm khách hàng
-// 	private void addnew_KhachHang() {
-// 			KhachHang kh = revertKhachHang();
-// 			khachHang_dao.addKhachHang(kh);
-// 			JOptionPane.showMessageDialog(this, "Thêm thành công!");
-// 			model_KhachHang.setRowCount(0);
-// 			loadKhachHang();
-// 			clear_KhachHang();
-// 	}
+    // thêm khách hàng
+ 	private void addnew_KhachHang() {
+ 			KhachHang kh = revertKhachHang();
+ 			khachHang_dao.addKhachHang(kh);
+ 			JOptionPane.showMessageDialog(this, "Thêm thành công!");
+// 			startHighlightNewRowTimer();
+ 			model_KhachHang.setRowCount(0);
+ 			loadKhachHang();
+ 			clear_KhachHang();
+ 	}
  	
  	
  	 // tạo 1 phòng
-// 	public KhachHang revertKhachHang() {
-// 			// TODO Auto-generated method stub
-// 			String ma = generateCode();
-// 			int count = khachHang_dao.kiemTraMa(ma);
-//// 			if (count > 0) {
-//// 				ma = generateCode();
-//// 			}
-// 			do {
-// 				ma = generateCode();
-// 			}while(count > 0);
-// 			
-// 			String tenKH = txtTenKH.getText().trim();
-// 			String cccd = txtCCCD.getText().trim();
-// 			String soDienThoai = txtSoDienThoai.getText().trim();
-// 			int gioiTinh = buttonGroup1.getButtonCount();
-//// 			int soLanSuDung = 0;
-// 			String diaChi = txtDiaChi.getText().trim();
-// 			
-// 			
-// 			return new KhachHang(ma, tenKH, soDienThoai, cccd, gioiTinh, diaChi);
-// 		}
+ 	public KhachHang revertKhachHang() {
+ 			// TODO Auto-generated method stub
+ 			String ma = generateCode();
+ 			int count = khachHang_dao.kiemTraMa(ma);
+ 			do {
+ 				ma = generateCode();
+ 			}while(count > 0);
+ 			
+ 			String tenKH = txtTenKH.getText().trim();
+ 			String cccd = txtCCCD.getText().trim();
+ 			String soDienThoai = txtSoDienThoai.getText().trim();
+ 			int gioiTinh = buttonGroup1.getButtonCount();
+// 			int soLanSuDung = 0;
+ 			String diaChi = txtDiaChi.getText().trim();
+ 			
+ 			return new KhachHang(ma, tenKH, soDienThoai, cccd, gioiTinh, diaChi);
+ 		}
     
     // làm mới data nhập khách hàng
     public void clear_KhachHang() {
@@ -507,50 +516,50 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
 	}
     
 	// cập nhật khách hàng
-//	public void edit_KhachHang() {
-//		int row = tblDSKhachHang.getSelectedRow();
-//		if (txtMaKH.getText().equals("")) {
-//			JOptionPane.showMessageDialog(this, "Bạn chưa chọn khách hàng để cập nhật thông tin!");
-//		} else {
-//			int choice = JOptionPane.showConfirmDialog(null, "Ban có chắc chắn muốn cập nhật không ?");
-//			if (choice == JOptionPane.YES_OPTION) {
-//					String ma = txtMaKH.getText().trim();
-//					KhachHang kh = update_KhachHang(ma);
-////					model_Phong.setValueAt(p.getTenPhongHat(), row, 1);
-////					model_Phong.setValueAt(p.getLoaiPhong().getTenLoaiPhong(), row, 2);
-////					model_Phong.setValueAt(p.getGiaPhong(), row, 3);
-////					model_Phong.setValueAt(p.getTinhTrang(), row, 4);
-////					model_Phong.setValueAt(p.getSucChua(), row, 5);
-//					khachHang_dao.capNhat_KhachHang(kh);
-//					loadKhachHang();
-//					clear_KhachHang();
-//					JOptionPane.showMessageDialog(null, "Cập nhật hoàn tất!");
-//				}
-//			}
-//		
-//	}
+	public void edit_KhachHang() {
+		int row = tblDSKhachHang.getSelectedRow();
+		if (txtMaKH.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn khách hàng để cập nhật thông tin!");
+		} else {
+			int choice = JOptionPane.showConfirmDialog(null, "Ban có chắc chắn muốn cập nhật không ?");
+			if (choice == JOptionPane.YES_OPTION) {
+					String ma = txtMaKH.getText().trim();
+					KhachHang kh = update_KhachHang(ma);
+//					model_Phong.setValueAt(p.getTenPhongHat(), row, 1);
+//					model_Phong.setValueAt(p.getLoaiPhong().getTenLoaiPhong(), row, 2);
+//					model_Phong.setValueAt(p.getGiaPhong(), row, 3);
+//					model_Phong.setValueAt(p.getTinhTrang(), row, 4);
+//					model_Phong.setValueAt(p.getSucChua(), row, 5);
+					khachHang_dao.capNhat_KhachHang(kh);
+					loadKhachHang();
+					clear_KhachHang();
+					JOptionPane.showMessageDialog(null, "Cập nhật hoàn tất!");
+				}
+			}
+		
+	}
 	
 	// cập nhật 1 khách hàng
-//	 	public KhachHang update_KhachHang(String ma) {
-//	 		String tenKH = txtTenKH.getText().trim();
-//	 		String sdt = txtSoDienThoai.getText().trim();
-//	 		String cccd = txtCCCD.getText().trim();
-//	 		ButtonModel selectedButton = buttonGroup1.getSelection();
-//	 		int gioiTinh = 0;
-//	 		if (selectedButton != null) {
-//	 		    String gioiTinhString = selectedButton.getActionCommand();
-//	 		    gioiTinh = Integer.parseInt(gioiTinhString);
-//
-//	 		    // Sau đó, bạn có thể sử dụng giá trị gioiTinh bình thường.
-//	 		} else {
-//	 		    // Xử lý trường hợp không có nút radio nào được chọn.
-//	 		    // Có thể thông báo cho người dùng hoặc thực hiện xử lý khác theo nhu cầu.
-//	 		}
-//	 		
-//	 		String diaChi = txtDiaChi.getText().trim();
-//	 		
-//	 		return new KhachHang(ma, tenKH, sdt, cccd, gioiTinh , diaChi);
-//	 	}
+	 	public KhachHang update_KhachHang(String ma) {
+	 		String tenKH = txtTenKH.getText().trim();
+	 		String sdt = txtSoDienThoai.getText().trim();
+	 		String cccd = txtCCCD.getText().trim();
+	 		ButtonModel selectedButton = buttonGroup1.getSelection();
+	 		int gioiTinh = 0;
+	 		if (selectedButton != null) {
+	 		    String gioiTinhString = selectedButton.getActionCommand();
+	 		    gioiTinh = Integer.parseInt(gioiTinhString);
+
+	 		    // Sau đó, bạn có thể sử dụng giá trị gioiTinh bình thường.
+	 		} else {
+	 		    // Xử lý trường hợp không có nút radio nào được chọn.
+	 		    // Có thể thông báo cho người dùng hoặc thực hiện xử lý khác theo nhu cầu.
+	 		}
+	 		
+	 		String diaChi = txtDiaChi.getText().trim();
+	 		
+	 		return new KhachHang(ma, tenKH, sdt, cccd, gioiTinh , diaChi);
+	 	}
     
     
     // phát sinh mã khách hàng
