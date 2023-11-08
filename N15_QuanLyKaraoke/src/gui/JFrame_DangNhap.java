@@ -191,7 +191,7 @@ public class JFrame_DangNhap extends javax.swing.JFrame {
         jLabel3.setText("Mật khẩu:");
 
         txtUser.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        txtUser.setText("bao1028");
+        txtUser.setText("tranloi");
         
         
         txtUser.addActionListener(new java.awt.event.ActionListener() {

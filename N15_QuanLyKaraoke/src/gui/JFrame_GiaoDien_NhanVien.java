@@ -40,8 +40,8 @@ public class JFrame_GiaoDien_NhanVien extends javax.swing.JFrame {
 	private JPanel_DanhMucPhong phongHat;
 	private JPanel_TraCuuDichVu traCuuDichVu;
 	private JPanel_TraCuuPhong traCuuPhongHat;
-//	private JPanel_ThanhToanHoaDon thanhToanHoaDon;
-//	private JPanel_TraCuuHoaDon traCuuHoaDon;
+	private JPanel_ThanhToanHoaDon thanhToanHoaDon;
+	private JPanel_TraCuuHoaDon traCuuHoaDon;
 	private NhanVien nv;
 
 private JPanel_DanhMucDichVu dichVu;
@@ -64,8 +64,8 @@ private JPanel_DanhMucKhachHang traCuuKhachHang;
         traCuuDichVu = new JPanel_TraCuuDichVu();
         traCuuKhachHang = new JPanel_DanhMucKhachHang();
         traCuuPhongHat = new JPanel_TraCuuPhong();
-//        thanhToanHoaDon = new JPanel_ThanhToanHoaDon();
-//        traCuuHoaDon = new JPanel_TraCuuHoaDon();
+        thanhToanHoaDon = new JPanel_ThanhToanHoaDon();
+        traCuuHoaDon = new JPanel_TraCuuHoaDon();
         
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -77,8 +77,8 @@ private JPanel_DanhMucKhachHang traCuuKhachHang;
         mainPanel.add(traCuuDichVu, "Tra cứu dịch vụ");
         mainPanel.add(traCuuKhachHang, "Tra cứu khách hàng");
         mainPanel.add(traCuuPhongHat, "Tra cứu phòng hát");
-//        mainPanel.add(thanhToanHoaDon, "Thanh toán hoá đơn");
-//        mainPanel.add(traCuuHoaDon, "Tra cứu hoá đơn");
+        mainPanel.add(thanhToanHoaDon, "Thanh toán hoá đơn");
+        mainPanel.add(traCuuHoaDon, "Tra cứu hoá đơn");
         
         
         execute();

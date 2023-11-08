@@ -52,9 +52,9 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
 
 	private JPanel_ThongKeKHTiemNang thongKeKHTiemNang;
 
-//	private JPanel_ThanhToanHoaDon thanhToanHoaDon;
-//
-//	private JPanel_TraCuuHoaDon traCuuHoaDon;
+	private JPanel_ThanhToanHoaDon thanhToanHoaDon;
+
+	private JPanel_TraCuuHoaDon traCuuHoaDon;
     /**
      * Creates new form JFrame_GiaoDienChinh
      */
@@ -73,8 +73,8 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
         
         thongKeDVUaThich = new Jpanel_ThongKeDVUaThich();
         thongKeKHTiemNang = new JPanel_ThongKeKHTiemNang();
-//        thanhToanHoaDon = new JPanel_ThanhToanHoaDon();
-//        traCuuHoaDon = new JPanel_TraCuuHoaDon();
+        thanhToanHoaDon = new JPanel_ThanhToanHoaDon();
+        traCuuHoaDon = new JPanel_TraCuuHoaDon();
        
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -89,8 +89,8 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
         
         mainPanel.add(thongKeDVUaThich, "Thống kê dịch vụ ưa thích");
         mainPanel.add(thongKeKHTiemNang, "Thống kê khách hàng tiềm năng");
-//        mainPanel.add(thanhToanHoaDon, "Thanh toán hóa đơn");
-//        mainPanel.add(traCuuHoaDon, "Tra cứu hóa đơn");
+        mainPanel.add(thanhToanHoaDon, "Thanh toán hóa đơn");
+        mainPanel.add(traCuuHoaDon, "Tra cứu hóa đơn");
         execute();
         jPanelbody.add(mainPanel, BorderLayout.CENTER);
     }
