@@ -202,7 +202,7 @@ public class JFrame_DangNhap extends javax.swing.JFrame {
 
         txtPass.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         txtPass.setToolTipText("");
-        txtPass.setText("bao123");
+        txtPass.setText("123456");
         
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));

@@ -136,4 +136,264 @@ public class Phong_DAO {
 			}
 		}
 	}
+	// tìm danh sách phòng theo loại phòng
+	public ArrayList<PhongHat> getAllPhongTheoLoaiPhong(String loai) {
+		ArrayList<PhongHat> dsPhong = new ArrayList<PhongHat>();
+		
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "SELECT p.MaPhongHat, p.TenPhongHat, p.GiaPhong, p.TinhTrang, p.SucChua, p.MaLoaiPhong, l.TenLoaiPhong FROM tbl_PhongHat p join tbl_LoaiPhong l on p.MaLoaiPhong = l.MaLoaiPhong where l.TenLoaiPhong = N'" + loai + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				double donGia = rs.getDouble(3);
+				String tinhTrang = rs.getString(4);
+				int sucChua = rs.getInt(5);
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7));
+				
+				PhongHat p = new PhongHat(ma, ten, lp, donGia, tinhTrang, sucChua);
+				dsPhong.add(p);
+			}
+		
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPhong;
+	}
+	// tìm danh sách phòng theo tình trạng
+	public ArrayList<PhongHat> getAllPhongTheoTinhTrang(String tt) {
+		ArrayList<PhongHat> dsPhong = new ArrayList<PhongHat>();
+		
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "SELECT p.MaPhongHat, p.TenPhongHat, p.GiaPhong, p.TinhTrang, p.SucChua, p.MaLoaiPhong, l.TenLoaiPhong FROM tbl_PhongHat p join tbl_LoaiPhong l on p.MaLoaiPhong = l.MaLoaiPhong where p.TinhTrang = N'" + tt + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				double donGia = rs.getDouble(3);
+				String tinhTrang = rs.getString(4);
+				int sucChua = rs.getInt(5);
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7));
+				
+				PhongHat p = new PhongHat(ma, ten, lp, donGia, tinhTrang, sucChua);
+				dsPhong.add(p);
+			}
+		
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPhong;
+	}
+	// tìm danh sách phòng theo sức chưa
+	public ArrayList<PhongHat> getAllPhongTheoSucChua(String sc) {
+		ArrayList<PhongHat> dsPhong = new ArrayList<PhongHat>();
+		
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "SELECT p.MaPhongHat, p.TenPhongHat, p.GiaPhong, p.TinhTrang, p.SucChua, p.MaLoaiPhong, l.TenLoaiPhong FROM tbl_PhongHat p join tbl_LoaiPhong l on p.MaLoaiPhong = l.MaLoaiPhong where p.SucChua = N'" + sc + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				double donGia = rs.getDouble(3);
+				String tinhTrang = rs.getString(4);
+				int sucChua = rs.getInt(5);
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7));
+				
+				PhongHat p = new PhongHat(ma, ten, lp, donGia, tinhTrang, sucChua);
+				dsPhong.add(p);
+			}
+		
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPhong;
+	}
+	// tìm danh sách phòng theo tên phòng
+	public ArrayList<PhongHat> getAllPhongTheoTenPhong(String t) {
+		ArrayList<PhongHat> dsPhong = new ArrayList<PhongHat>();
+		
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "SELECT p.MaPhongHat, p.TenPhongHat, p.GiaPhong, p.TinhTrang, p.SucChua, p.MaLoaiPhong, l.TenLoaiPhong FROM tbl_PhongHat p join tbl_LoaiPhong l on p.MaLoaiPhong = l.MaLoaiPhong where p.TenPhongHat = N'" + t + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				double donGia = rs.getDouble(3);
+				String tinhTrang = rs.getString(4);
+				int sucChua = rs.getInt(5);
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7));
+				
+				PhongHat p = new PhongHat(ma, ten, lp, donGia, tinhTrang, sucChua);
+				dsPhong.add(p);
+			}
+		
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPhong;
+	}
+	// tìm danh sách phòng theo giaPhong
+	public ArrayList<PhongHat> getAllPhongTheoGiaPhong(String gia) {
+		ArrayList<PhongHat> dsPhong = new ArrayList<PhongHat>();
+		
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "SELECT p.MaPhongHat, p.TenPhongHat, p.GiaPhong, p.TinhTrang, p.SucChua, p.MaLoaiPhong, l.TenLoaiPhong FROM tbl_PhongHat p join tbl_LoaiPhong l on p.MaLoaiPhong = l.MaLoaiPhong where p.GiaPhong = '" + gia + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				double donGia = rs.getDouble(3);
+				String tinhTrang = rs.getString(4);
+				int sucChua = rs.getInt(5);
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7));
+				
+				PhongHat p = new PhongHat(ma, ten, lp, donGia, tinhTrang, sucChua);
+				dsPhong.add(p);
+			}
+		
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPhong;
+	}
+	// tìm danh sách phòng theo loại phòng và tình trạng
+	public ArrayList<PhongHat> getAllPhongTheoLPTT(String loai, String tt) {
+		ArrayList<PhongHat> dsPhong = new ArrayList<PhongHat>();
+		
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "SELECT p.MaPhongHat, p.TenPhongHat, p.GiaPhong, p.TinhTrang, p.SucChua, p.MaLoaiPhong, l.TenLoaiPhong" +
+						" FROM tbl_PhongHat p join tbl_LoaiPhong l on p.MaLoaiPhong = l.MaLoaiPhong "
+						+ "where l.TenLoaiPhong like N'" + loai + "' and p.TinhTrang like N'" + tt + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				double donGia = rs.getDouble(3);
+				String tinhTrang = rs.getString(4);
+				int sucChua = rs.getInt(5);
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7));
+				
+				PhongHat p = new PhongHat(ma, ten, lp, donGia, tinhTrang, sucChua);
+				dsPhong.add(p);
+			}
+		
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPhong;
+	}
+	// tìm danh sách phòng theo loại phòng và sức chứa
+	public ArrayList<PhongHat> getAllPhongTheoLPSC(String loai, String sc) {
+		ArrayList<PhongHat> dsPhong = new ArrayList<PhongHat>();
+		
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "SELECT p.MaPhongHat, p.TenPhongHat, p.GiaPhong, p.TinhTrang, p.SucChua, p.MaLoaiPhong, l.TenLoaiPhong" +
+						" FROM tbl_PhongHat p join tbl_LoaiPhong l on p.MaLoaiPhong = l.MaLoaiPhong "
+						+ "where l.TenLoaiPhong like N'" + loai + "' and p.SucChua like N'" + sc + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				double donGia = rs.getDouble(3);
+				String tinhTrang = rs.getString(4);
+				int sucChua = rs.getInt(5);
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7));
+				
+				PhongHat p = new PhongHat(ma, ten, lp, donGia, tinhTrang, sucChua);
+				dsPhong.add(p);
+			}
+		
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPhong;
+	}
+	// tìm danh sách phòng theo tình trạng và sức chứa
+	public ArrayList<PhongHat> getAllPhongTheoTTSC(String tt, String sc) {
+		ArrayList<PhongHat> dsPhong = new ArrayList<PhongHat>();
+		
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "SELECT p.MaPhongHat, p.TenPhongHat, p.GiaPhong, p.TinhTrang, p.SucChua, p.MaLoaiPhong, l.TenLoaiPhong" +
+						" FROM tbl_PhongHat p join tbl_LoaiPhong l on p.MaLoaiPhong = l.MaLoaiPhong "
+						+ "where p.TinhTrang like N'" + tt + "' and p.SucChua like N'" + sc + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				double donGia = rs.getDouble(3);
+				String tinhTrang = rs.getString(4);
+				int sucChua = rs.getInt(5);
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7));
+				
+				PhongHat p = new PhongHat(ma, ten, lp, donGia, tinhTrang, sucChua);
+				dsPhong.add(p);
+			}
+		
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPhong;
+	}
+	// tìm danh sách phòng theo tình trạng và sức chứa
+	public ArrayList<PhongHat> getAllPhongTheoLPTTSC(String loai, String tt, String sc) {
+		ArrayList<PhongHat> dsPhong = new ArrayList<PhongHat>();
+		
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "SELECT p.MaPhongHat, p.TenPhongHat, p.GiaPhong, p.TinhTrang, p.SucChua, p.MaLoaiPhong, l.TenLoaiPhong" +
+						" FROM tbl_PhongHat p join tbl_LoaiPhong l on p.MaLoaiPhong = l.MaLoaiPhong "
+						+ "where p.TinhTrang like N'" + tt + "' and p.SucChua like N'" + sc + "' and l.TenLoaiPhong like N'" + loai + "'";
+			Statement statement = con.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				double donGia = rs.getDouble(3);
+				String tinhTrang = rs.getString(4);
+				int sucChua = rs.getInt(5);
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7));
+				
+				PhongHat p = new PhongHat(ma, ten, lp, donGia, tinhTrang, sucChua);
+				dsPhong.add(p);
+			}
+		
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPhong;
+	}
 }

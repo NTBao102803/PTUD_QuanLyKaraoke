@@ -54,6 +54,7 @@ public class JPanel_ThongKeKHTiemNang extends javax.swing.JPanel {
             .addGap(0, 132, Short.MAX_VALUE)
         );
 
+<<<<<<< HEAD
         tblKHTiemNang.setModel(new DefaultTableModel(
         	new Object[][] {
         		{null, null, null, null, null, null},
@@ -90,6 +91,44 @@ public class JPanel_ThongKeKHTiemNang extends javax.swing.JPanel {
         	new String[] {
         		"M\u00E3 Kh\u00E1ch H\u00E0ng", "T\u00EAn Kh\u00E1ch H\u00E0ng ", "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i ", "Th\u1EDDi Gian S\u1EED D\u1EE5ng ", "S\u1ED1 L\u1EA7n S\u1EED D\u1EE5ng", "Th\u00E0nh Ti\u1EC1n "
         	}
+=======
+        tblKHTiemNang.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null},
+//                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Mã Khách Hàng", "Tên Khách Hàng ", "Số Điện Thoại ", "Ngày Tạo ", "Ngày Cập Nhật ", "Thời Gian Sử Dụng ", "Số Phòng Sử Dụng", "Thành Tiền ", "Ghi Chú"
+            }
+>>>>>>> 0eae0d2eb23ca50db2c4c2e6f57c91c1cf0de3fd
         ));
         tblKHTiemNang.setShowGrid(true);
         jScrollPane1.setViewportView(tblKHTiemNang);
