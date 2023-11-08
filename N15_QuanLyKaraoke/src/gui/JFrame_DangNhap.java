@@ -202,7 +202,7 @@ public class JFrame_DangNhap extends javax.swing.JFrame {
 
         txtPass.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         txtPass.setToolTipText("");
-        txtPass.setText("123456");
+        txtPass.setText("bao123");
         
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -351,7 +351,6 @@ public class JFrame_DangNhap extends javax.swing.JFrame {
     		JOptionPane.showMessageDialog(this, "Mật khẩu không đúng!\nVui lòng kiểm tra lại.");
     	}
     	else {
-    		JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
     		NhanVien nv = nhanVien_dao.getNVtheoMa(tk.getNhanVien().getMaNhanVien());
     		if (nv.getChucVu().equalsIgnoreCase("Quản lý")) {
     			JFrame_GiaoDien_QuanLy frm_QuanLy = new JFrame_GiaoDien_QuanLy(nv);

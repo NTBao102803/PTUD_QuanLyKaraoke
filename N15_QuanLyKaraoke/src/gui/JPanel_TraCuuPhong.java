@@ -122,14 +122,6 @@ public class JPanel_TraCuuPhong extends javax.swing.JPanel {
         jButtonTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButtonTimKiem.setIcon(new javax.swing.ImageIcon("item/search25.png")); // NOI18N
         jButtonTimKiem.setText("Tìm kiếm");
-        jButtonTimKiem.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				timKiem();
-			}
-		});
 
         jButtonLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButtonLamMoi.setIcon(new javax.swing.ImageIcon("item/refresh25.png")); // NOI18N
@@ -293,122 +285,8 @@ public class JPanel_TraCuuPhong extends javax.swing.JPanel {
 		String sucChua = jComboBoxSucChua.getSelectedItem().toString();
 		String giaPhong = jTextFieldGiaPhong.getText().trim();
 		String tinhTrang = jComboBoxTinhTrang.getSelectedItem().toString();
-		// tình trạng, loại phòng và sức chứa
-		if (!loaiPhong.equalsIgnoreCase("Tất cả") && !tinhTrang.equalsIgnoreCase("Tất cả") && !sucChua.equalsIgnoreCase("Tất cả")) {
-			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoLPTTSC(loaiPhong, tinhTrang, sucChua);
-			model_Phong.setRowCount(0);
-			for (PhongHat ph : dsPhongHat) {
-				model_Phong.addRow(new Object[] {
-					ph.getMaPhongHat(), ph.getTenPhongHat() ,
-					ph.getLoaiPhong().getTenLoaiPhong(),
-					ph.getGiaPhong(), ph.getTinhTrang(), 
-					ph.getSucChua()
-				});
-			}
-		}
-		// loại phòng vs tình trạng
-		else if (!loaiPhong.equalsIgnoreCase("Tất cả") && !tinhTrang.equalsIgnoreCase("Tất cả")) {
-			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoLPTT(loaiPhong, tinhTrang);
-			model_Phong.setRowCount(0);
-			for (PhongHat ph : dsPhongHat) {
-				model_Phong.addRow(new Object[] {
-					ph.getMaPhongHat(), ph.getTenPhongHat() ,
-					ph.getLoaiPhong().getTenLoaiPhong(),
-					ph.getGiaPhong(), ph.getTinhTrang(), 
-					ph.getSucChua()
-				});
-			}
-		}
-		// loại phòng vs sức chứa
-		else if (!loaiPhong.equalsIgnoreCase("Tất cả") && !sucChua.equalsIgnoreCase("Tất cả")) {
-			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoLPSC(loaiPhong, sucChua);
-			model_Phong.setRowCount(0);
-			for (PhongHat ph : dsPhongHat) {
-				model_Phong.addRow(new Object[] {
-					ph.getMaPhongHat(), ph.getTenPhongHat() ,
-					ph.getLoaiPhong().getTenLoaiPhong(),
-					ph.getGiaPhong(), ph.getTinhTrang(), 
-					ph.getSucChua()
-				});
-			}
-		}
-		// tình trạng với sức chứa
-		else if (!tinhTrang.equalsIgnoreCase("Tất cả") && !sucChua.equalsIgnoreCase("Tất cả")) {
-			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoTTSC(tinhTrang, sucChua);
-			model_Phong.setRowCount(0);
-			for (PhongHat ph : dsPhongHat) {
-				model_Phong.addRow(new Object[] {
-					ph.getMaPhongHat(), ph.getTenPhongHat() ,
-					ph.getLoaiPhong().getTenLoaiPhong(),
-					ph.getGiaPhong(), ph.getTinhTrang(), 
-					ph.getSucChua()
-				});
-			}
-		}
-		// loại phòng
-		else if (!loaiPhong.equalsIgnoreCase("Tất cả")) {
-			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoLoaiPhong(loaiPhong);
-			model_Phong.setRowCount(0);
-			for (PhongHat ph : dsPhongHat) {
-				model_Phong.addRow(new Object[] {
-					ph.getMaPhongHat(), ph.getTenPhongHat() ,
-					ph.getLoaiPhong().getTenLoaiPhong(),
-					ph.getGiaPhong(), ph.getTinhTrang(), 
-					ph.getSucChua()
-				});
-			}
-		}
-		// tình trạng
-		else if (!tinhTrang.equalsIgnoreCase("Tất cả")) {
-			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoTinhTrang(tinhTrang);
-			model_Phong.setRowCount(0);
-			for (PhongHat ph : dsPhongHat) {
-				model_Phong.addRow(new Object[] {
-					ph.getMaPhongHat(), ph.getTenPhongHat() ,
-					ph.getLoaiPhong().getTenLoaiPhong(),
-					ph.getGiaPhong(), ph.getTinhTrang(), 
-					ph.getSucChua()
-				});
-			}
-		}
-		// sức chứa
-		else if (!sucChua.equalsIgnoreCase("Tất cả")) {
-			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoSucChua(sucChua);
-			model_Phong.setRowCount(0);
-			for (PhongHat ph : dsPhongHat) {
-				model_Phong.addRow(new Object[] {
-					ph.getMaPhongHat(), ph.getTenPhongHat() ,
-					ph.getLoaiPhong().getTenLoaiPhong(),
-					ph.getGiaPhong(), ph.getTinhTrang(), 
-					ph.getSucChua()
-				});
-			}
-		}
-		// tên phòng
-		else if (!ten.equalsIgnoreCase("")) {
-			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoTenPhong(ten);
-			model_Phong.setRowCount(0);
-			for (PhongHat ph : dsPhongHat) {
-				model_Phong.addRow(new Object[] {
-					ph.getMaPhongHat(), ph.getTenPhongHat() ,
-					ph.getLoaiPhong().getTenLoaiPhong(),
-					ph.getGiaPhong(), ph.getTinhTrang(), 
-					ph.getSucChua()
-				});
-			}
-		}
-		// giá phòng
-		else if (!giaPhong.equalsIgnoreCase("")) {
-			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoGiaPhong(giaPhong);
-			model_Phong.setRowCount(0);
-			for (PhongHat ph : dsPhongHat) {
-				model_Phong.addRow(new Object[] {
-					ph.getMaPhongHat(), ph.getTenPhongHat() ,
-					ph.getLoaiPhong().getTenLoaiPhong(),
-					ph.getGiaPhong(), ph.getTinhTrang(), 
-					ph.getSucChua()
-				});
-			}
+		if (!ten.equalsIgnoreCase("") ) {
+			
 		}
 	}
     // Variables declaration - do not modify//GEN-BEGIN:variables

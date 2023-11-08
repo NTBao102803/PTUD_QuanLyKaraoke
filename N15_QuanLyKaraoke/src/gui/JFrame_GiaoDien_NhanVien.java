@@ -40,15 +40,11 @@ public class JFrame_GiaoDien_NhanVien extends javax.swing.JFrame {
 	private JPanel_DanhMucPhong phongHat;
 	private JPanel_TraCuuDichVu traCuuDichVu;
 	private JPanel_TraCuuPhong traCuuPhongHat;
+	private JPanel_ManHinhDatPhong manHinhDatPhong;
+	
 //	private JPanel_ThanhToanHoaDon thanhToanHoaDon;
 //	private JPanel_TraCuuHoaDon traCuuHoaDon;
 	private NhanVien nv;
-
-private JPanel_DanhMucDichVu dichVu;
-
-private JPanel_DanhMucKhachHang khachHang;
-
-private JPanel_DanhMucKhachHang traCuuKhachHang;
     /**
      * Creates new form JFrame_GiaoDienChinh
      */
@@ -59,11 +55,11 @@ private JPanel_DanhMucKhachHang traCuuKhachHang;
         
         trangChu = new JPanel_TrangChu();
         phongHat = new JPanel_DanhMucPhong();
-        dichVu = new JPanel_DanhMucDichVu();
-        khachHang = new JPanel_DanhMucKhachHang();
         traCuuDichVu = new JPanel_TraCuuDichVu();
-        traCuuKhachHang = new JPanel_DanhMucKhachHang();
         traCuuPhongHat = new JPanel_TraCuuPhong();
+        manHinhDatPhong = new JPanel_ManHinhDatPhong();
+       
+        		
 //        thanhToanHoaDon = new JPanel_ThanhToanHoaDon();
 //        traCuuHoaDon = new JPanel_TraCuuHoaDon();
         
@@ -72,11 +68,11 @@ private JPanel_DanhMucKhachHang traCuuKhachHang;
         
         mainPanel.add(trangChu, "Trang chủ");
         mainPanel.add(phongHat, "Danh mục phòng hát");
-        mainPanel.add(dichVu, "Danh mục dịch vụ");
-        mainPanel.add(khachHang, "Danh mục khách hàng");
         mainPanel.add(traCuuDichVu, "Tra cứu dịch vụ");
-        mainPanel.add(traCuuKhachHang, "Tra cứu khách hàng");
         mainPanel.add(traCuuPhongHat, "Tra cứu phòng hát");
+        mainPanel.add(manHinhDatPhong, "Màn hình đặt phòng");
+     
+       
 //        mainPanel.add(thanhToanHoaDon, "Thanh toán hoá đơn");
 //        mainPanel.add(traCuuHoaDon, "Tra cứu hoá đơn");
         
@@ -161,8 +157,7 @@ private JPanel_DanhMucKhachHang traCuuKhachHang;
             	  menuDoanhThu.setBackground(Color.white);
             	
             	  menuDoanhThuTheoNgay.setBackground(Color.white);
-            	  
-            	  cardLayout.show(mainPanel, "Danh mục khách hàng");
+            	 
               }
           });
         menuPhong = new MenuItem(iconPhong, "Phòng hát", new ActionListener() {
@@ -228,7 +223,6 @@ private JPanel_DanhMucKhachHang traCuuKhachHang;
             	 
             	  menuDoanhThuTheoNgay.setBackground(Color.white);
             	 
-            	  cardLayout.show(mainPanel, "Danh mục dịch vụ");
               }
           });
         menuDanhMuc = new MenuItem(iconDanhMuc, "Danh mục", new ActionListener() {
@@ -291,8 +285,9 @@ private JPanel_DanhMucKhachHang traCuuKhachHang;
             	  menuTraCuuHoaDon.setBackground(Color.white);
             	// xét background cho menu con của menuThongKe
             	  menuDoanhThu.setBackground(Color.white);
-            	 
+            	  
             	  menuDoanhThuTheoNgay.setBackground(Color.white);
+            	  cardLayout.show(mainPanel,"Màn hình đặt phòng");
             	 
               }
           });
@@ -390,8 +385,6 @@ private JPanel_DanhMucKhachHang traCuuKhachHang;
               	  menuDoanhThu.setBackground(Color.white);
               	 
               	  menuDoanhThuTheoNgay.setBackground(Color.white);
-              	  
-              	  cardLayout.show(mainPanel, "Tra cứu khách hàng");
               	  
               }
           });

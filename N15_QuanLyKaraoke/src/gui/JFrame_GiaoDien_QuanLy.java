@@ -40,17 +40,12 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
 	private JPanel_DanhMucPhong phongHat;
 	private JPanel_TraCuuDichVu traCuuDichVu;
 	private JPanel_TraCuuPhong traCuuPhongHat;
+	private JPanel_DanhMucNhanVien nhanVien;
 	private NhanVien nv;
-
-	private JPanel_DanhMucDichVu dichVu;
-
-	private JPanel_DanhMucKhachHang khachHang;
-
-	private JPanel_TraCuuKhachHang traCuuKhachHang;
-
-	private Jpanel_ThongKeDVUaThich thongKeDVUaThich;
-
-	private JPanel_ThongKeKHTiemNang thongKeKHTiemNang;
+	private JPanel_ManHinhDatPhong manHinhDatPhong;
+	private JPanel_TraCuuNhanVien traCuuNhanVien;
+	
+	
 
 //	private JPanel_ThanhToanHoaDon thanhToanHoaDon;
 //
@@ -65,14 +60,12 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
         
         trangChu = new JPanel_TrangChu();
         phongHat = new JPanel_DanhMucPhong();
-        dichVu = new JPanel_DanhMucDichVu();
-        khachHang = new JPanel_DanhMucKhachHang();
         traCuuDichVu = new JPanel_TraCuuDichVu();
-        traCuuKhachHang = new JPanel_TraCuuKhachHang();
         traCuuPhongHat = new JPanel_TraCuuPhong();
-        
-        thongKeDVUaThich = new Jpanel_ThongKeDVUaThich();
-        thongKeKHTiemNang = new JPanel_ThongKeKHTiemNang();
+        traCuuNhanVien = new JPanel_TraCuuNhanVien();
+ 	   
+        nhanVien = new JPanel_DanhMucNhanVien();
+        manHinhDatPhong = new JPanel_ManHinhDatPhong();
 //        thanhToanHoaDon = new JPanel_ThanhToanHoaDon();
 //        traCuuHoaDon = new JPanel_TraCuuHoaDon();
        
@@ -81,14 +74,11 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
         
         mainPanel.add(trangChu, "Trang chủ");
         mainPanel.add(phongHat, "Danh mục phòng hát");
-        mainPanel.add(dichVu, "Danh mục dịch vụ");
-        mainPanel.add(khachHang, "Danh mục khách hàng");
         mainPanel.add(traCuuDichVu, "Tra cứu dịch vụ");
-        mainPanel.add(traCuuKhachHang, "Tra cứu khách hàng");
         mainPanel.add(traCuuPhongHat, "Tra cứu phòng hát");
-        
-        mainPanel.add(thongKeDVUaThich, "Thống kê dịch vụ ưa thích");
-        mainPanel.add(thongKeKHTiemNang, "Thống kê khách hàng tiềm năng");
+        mainPanel.add(nhanVien,"Danh mục nhân viên");
+        mainPanel.add(manHinhDatPhong, "Màn hình đặt phòng");
+        mainPanel.add(traCuuNhanVien, "Tra cứu nhân viên");
 //        mainPanel.add(thanhToanHoaDon, "Thanh toán hóa đơn");
 //        mainPanel.add(traCuuHoaDon, "Tra cứu hóa đơn");
         execute();
@@ -156,10 +146,12 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
             	  menuTraCuu.setBackground(menus.getBackground());
             	  menuThongKe.setBackground(menus.getBackground());
             	  menuTroGiup.setBackground(menus.getBackground());
+          
             	  // xét background cho menu con của menuDanhMuc
             	  menuKhachHang.setBackground(Color.white);
             	  menuPhong.setBackground(Color.white);
             	  menuDichVu.setBackground(Color.white);
+//            	  menuNhanVien.setBackground(Color.white);
             	  // xét background cho menu con của menuXuLy
             	  menuDatPhong.setBackground(Color.white);
             	  menuHoaDon.setBackground(Color.white);
@@ -175,6 +167,7 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
             	  menuKhachHangTiemNang.setBackground(Color.white);
             	  menuDoanhThuTheoNgay.setBackground(Color.white);
             	  menuDoanhThuTheoThang.setBackground(Color.white);
+            	  cardLayout.show(mainPanel, "Danh mục nhân viên");
               }
           });
         menuKhachHang = new MenuItem(iconKhachHang, "Khách hàng", new ActionListener() {
@@ -207,8 +200,6 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
             	  menuKhachHangTiemNang.setBackground(Color.white);
             	  menuDoanhThuTheoNgay.setBackground(Color.white);
             	  menuDoanhThuTheoThang.setBackground(Color.white);
-            	  
-            	  cardLayout.show(mainPanel, "Danh mục khách hàng");
               }
           });
         menuPhong = new MenuItem(iconPhong, "Phòng hát", new ActionListener() {
@@ -276,8 +267,6 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
             	  menuKhachHangTiemNang.setBackground(Color.white);
             	  menuDoanhThuTheoNgay.setBackground(Color.white);
             	  menuDoanhThuTheoThang.setBackground(Color.white);
-            	  
-            	  cardLayout.show(mainPanel, "Danh mục dịch vụ");
               }
           });
         menuDanhMuc = new MenuItem(iconDanhMuc, "Danh mục", new ActionListener() {
@@ -345,6 +334,9 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
             	  menuKhachHangTiemNang.setBackground(Color.white);
             	  menuDoanhThuTheoNgay.setBackground(Color.white);
             	  menuDoanhThuTheoThang.setBackground(Color.white);
+            	  
+            	  
+            	  cardLayout.show(mainPanel,"Màn hình đặt phòng");
               }
           });
         menuHoaDon = new MenuItem(iconKhachHang, "Lập hóa đơn", new ActionListener() {
@@ -445,6 +437,7 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
             	  menuKhachHangTiemNang.setBackground(Color.white);
             	  menuDoanhThuTheoNgay.setBackground(Color.white);
             	  menuDoanhThuTheoThang.setBackground(Color.white);
+            	  cardLayout.show(mainPanel, "Tra cứu nhân viên");
               }
           });
         menuTraCuuKhachHang = new MenuItem(iconKhachHang, "Khách hàng", new ActionListener() {
@@ -477,8 +470,6 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
               	  menuKhachHangTiemNang.setBackground(Color.white);
               	  menuDoanhThuTheoNgay.setBackground(Color.white);
               	  menuDoanhThuTheoThang.setBackground(Color.white);
-              	  
-              	  cardLayout.show(mainPanel, "Tra cứu khách hàng");
               }
           });
         menuTraCuuPhong = new MenuItem(iconPhong, "Phòng", new ActionListener() {
@@ -744,8 +735,6 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
               	  menuKhachHangTiemNang.setBackground(Color.white);
               	  menuDoanhThuTheoNgay.setBackground(Color.white);
               	  menuDoanhThuTheoThang.setBackground(Color.white);
-              	  
-              	 cardLayout.show(mainPanel, "Thống kê dịch vụ ưa thích");
               }
           });
         menuKhachHangTiemNang = new MenuItem(iconKhachHang, "Khách hàng tiềm năng", new ActionListener() {
@@ -778,8 +767,6 @@ public class JFrame_GiaoDien_QuanLy extends javax.swing.JFrame {
               	  menuDichVuUaThich.setBackground(Color.white);
               	  menuDoanhThuTheoNgay.setBackground(Color.white);
               	  menuDoanhThuTheoThang.setBackground(Color.white);
-              	  
-              	 cardLayout.show(mainPanel, "Thống kê khách hàng tiềm năng");
               }
           });
         menuThongKe = new MenuItem(iconThongKe, "Thống kê", new ActionListener() {
