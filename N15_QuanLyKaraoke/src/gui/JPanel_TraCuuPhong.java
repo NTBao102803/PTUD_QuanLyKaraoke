@@ -4,16 +4,41 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableModel;
+
+import connectDB.ConnectDB;
+import dao.LoaiPhong_DAO;
+import dao.Phong_DAO;
+import entity.LoaiPhong;
+import entity.PhongHat;
+
 /**
  *
  * @author PC
  */
 public class JPanel_TraCuuPhong extends javax.swing.JPanel {
 
-    /**
+    private Phong_DAO phong_dao;
+	private LoaiPhong_DAO loaiPhong_dao;
+	private DefaultTableModel model_Phong;
+	private ArrayList<PhongHat> listPhong;
+	/**
      * Creates new form JPanel_TraCuuPhong
      */
     public JPanel_TraCuuPhong() {
+    	try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		phong_dao = new Phong_DAO();
+		loaiPhong_dao = new LoaiPhong_DAO();
         initComponents();
     }
 
@@ -73,18 +98,21 @@ public class JPanel_TraCuuPhong extends javax.swing.JPanel {
         jLabelTenPhong1.setText("Loại Phòng:");
 
         jComboBoxTinhTrang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBoxTinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trống" }));
+        jComboBoxTinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Trống", "Đang sử dụng", "Phòng chờ" }));
         jComboBoxTinhTrang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxTinhTrangActionPerformed(evt);
             }
         });
-
         jComboBoxLoaiPhong.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBoxLoaiPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vip", "Thường" }));
-
+        jComboBoxLoaiPhong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
+		/* Đổ dữ liệu lên comboBox */
+		ArrayList<LoaiPhong> listLoaiPhong = loaiPhong_dao.getAllLoaiPhong();
+		for (LoaiPhong lp : listLoaiPhong) {
+			jComboBoxLoaiPhong.addItem(lp.getTenLoaiPhong());
+		}
         jComboBoxSucChua.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBoxSucChua.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "15", "20" }));
+        jComboBoxSucChua.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
 
         jLabelGiaPhong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelGiaPhong.setText("Giá phòng:");
@@ -94,11 +122,29 @@ public class JPanel_TraCuuPhong extends javax.swing.JPanel {
         jButtonTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButtonTimKiem.setIcon(new javax.swing.ImageIcon("item/search25.png")); // NOI18N
         jButtonTimKiem.setText("Tìm kiếm");
+        jButtonTimKiem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				timKiem();
+			}
+		});
 
         jButtonLamMoi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButtonLamMoi.setIcon(new javax.swing.ImageIcon("item/refresh25.png")); // NOI18N
         jButtonLamMoi.setText("Làm mới");
-
+        jButtonLamMoi.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				loadPhong();
+				clear_Phong();
+			}
+		});
+        
+        
         javax.swing.GroupLayout jPanelBodyLayout = new javax.swing.GroupLayout(jPanelBody);
         jPanelBody.setLayout(jPanelBodyLayout);
         jPanelBodyLayout.setHorizontalGroup(
@@ -176,28 +222,8 @@ public class JPanel_TraCuuPhong extends javax.swing.JPanel {
         jScrollPane1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jTablePhongHat.setBackground(new java.awt.Color(242, 242, 242));
-        jTablePhongHat.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePhongHat.setModel(model_Phong = new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
             },
             new String [] {
                 "Mã phòng", "Tên phòng", "Loại phòng", "Giá phòng", "Tình trạng", "Sức chứa"
@@ -214,7 +240,10 @@ public class JPanel_TraCuuPhong extends javax.swing.JPanel {
         jTablePhongHat.setGridColor(new java.awt.Color(204, 204, 204));
         jTablePhongHat.setShowGrid(true);
         jScrollPane1.setViewportView(jTablePhongHat);
-
+        // load dữ liệu phòng lên table
+        loadPhong();
+        
+        
         javax.swing.GroupLayout jPanelDanhSachLayout = new javax.swing.GroupLayout(jPanelDanhSach);
         jPanelDanhSach.setLayout(jPanelDanhSachLayout);
         jPanelDanhSachLayout.setHorizontalGroup(
@@ -236,7 +265,151 @@ public class JPanel_TraCuuPhong extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxTinhTrangActionPerformed
 
-
+    // đọc dữ liệu vào bảng phòng
+    public void loadPhong() {
+    	model_Phong.setRowCount(0);
+		listPhong = phong_dao.getAllPhong();
+		for (PhongHat ph : listPhong) {
+			model_Phong.addRow(new Object[] { 
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua() });
+		}
+	}
+    // làm mới 
+	public void clear_Phong() {
+		jTextFieldTenPhong.setText("");
+		jComboBoxLoaiPhong.setSelectedIndex(0);
+		jComboBoxTinhTrang.setSelectedIndex(0);
+		jComboBoxSucChua.setSelectedIndex(0);
+		jTextFieldGiaPhong.setText("");
+	}
+	// tìm kiếm phòng
+	public void timKiem() {
+		String ten = jTextFieldTenPhong.getText().trim();
+		String loaiPhong = jComboBoxLoaiPhong.getSelectedItem().toString();
+		String sucChua = jComboBoxSucChua.getSelectedItem().toString();
+		String giaPhong = jTextFieldGiaPhong.getText().trim();
+		String tinhTrang = jComboBoxTinhTrang.getSelectedItem().toString();
+		// tình trạng, loại phòng và sức chứa
+		if (!loaiPhong.equalsIgnoreCase("Tất cả") && !tinhTrang.equalsIgnoreCase("Tất cả") && !sucChua.equalsIgnoreCase("Tất cả")) {
+			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoLPTTSC(loaiPhong, tinhTrang, sucChua);
+			model_Phong.setRowCount(0);
+			for (PhongHat ph : dsPhongHat) {
+				model_Phong.addRow(new Object[] {
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua()
+				});
+			}
+		}
+		// loại phòng vs tình trạng
+		else if (!loaiPhong.equalsIgnoreCase("Tất cả") && !tinhTrang.equalsIgnoreCase("Tất cả")) {
+			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoLPTT(loaiPhong, tinhTrang);
+			model_Phong.setRowCount(0);
+			for (PhongHat ph : dsPhongHat) {
+				model_Phong.addRow(new Object[] {
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua()
+				});
+			}
+		}
+		// loại phòng vs sức chứa
+		else if (!loaiPhong.equalsIgnoreCase("Tất cả") && !sucChua.equalsIgnoreCase("Tất cả")) {
+			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoLPSC(loaiPhong, sucChua);
+			model_Phong.setRowCount(0);
+			for (PhongHat ph : dsPhongHat) {
+				model_Phong.addRow(new Object[] {
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua()
+				});
+			}
+		}
+		// tình trạng với sức chứa
+		else if (!tinhTrang.equalsIgnoreCase("Tất cả") && !sucChua.equalsIgnoreCase("Tất cả")) {
+			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoTTSC(tinhTrang, sucChua);
+			model_Phong.setRowCount(0);
+			for (PhongHat ph : dsPhongHat) {
+				model_Phong.addRow(new Object[] {
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua()
+				});
+			}
+		}
+		// loại phòng
+		else if (!loaiPhong.equalsIgnoreCase("Tất cả")) {
+			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoLoaiPhong(loaiPhong);
+			model_Phong.setRowCount(0);
+			for (PhongHat ph : dsPhongHat) {
+				model_Phong.addRow(new Object[] {
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua()
+				});
+			}
+		}
+		// tình trạng
+		else if (!tinhTrang.equalsIgnoreCase("Tất cả")) {
+			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoTinhTrang(tinhTrang);
+			model_Phong.setRowCount(0);
+			for (PhongHat ph : dsPhongHat) {
+				model_Phong.addRow(new Object[] {
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua()
+				});
+			}
+		}
+		// sức chứa
+		else if (!sucChua.equalsIgnoreCase("Tất cả")) {
+			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoSucChua(sucChua);
+			model_Phong.setRowCount(0);
+			for (PhongHat ph : dsPhongHat) {
+				model_Phong.addRow(new Object[] {
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua()
+				});
+			}
+		}
+		// tên phòng
+		else if (!ten.equalsIgnoreCase("")) {
+			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoTenPhong(ten);
+			model_Phong.setRowCount(0);
+			for (PhongHat ph : dsPhongHat) {
+				model_Phong.addRow(new Object[] {
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua()
+				});
+			}
+		}
+		// giá phòng
+		else if (!giaPhong.equalsIgnoreCase("")) {
+			ArrayList<PhongHat> dsPhongHat = phong_dao.getAllPhongTheoGiaPhong(giaPhong);
+			model_Phong.setRowCount(0);
+			for (PhongHat ph : dsPhongHat) {
+				model_Phong.addRow(new Object[] {
+					ph.getMaPhongHat(), ph.getTenPhongHat() ,
+					ph.getLoaiPhong().getTenLoaiPhong(),
+					ph.getGiaPhong(), ph.getTinhTrang(), 
+					ph.getSucChua()
+				});
+			}
+		}
+	}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonLamMoi;
     private javax.swing.JButton jButtonTimKiem;
