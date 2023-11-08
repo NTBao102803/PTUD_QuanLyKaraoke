@@ -4,6 +4,9 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author tranvanloi
@@ -160,6 +163,14 @@ public class JPanel_TraCuuHoaDon extends javax.swing.JPanel {
         btnLamLai.setIcon(new javax.swing.ImageIcon("item/refresh25.png")); // NOI18N
         btnLamLai.setText("Làm lại");
         btnLamLai.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLamLai.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				clear_TraCuuHoaDon();
+			}
+		});
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -228,7 +239,11 @@ public class JPanel_TraCuuHoaDon extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    public void clear_TraCuuHoaDon() {
+		txtTenPhong.setText("");
+		txtTenKhachHang.setText("");
+	}
+    
     private void pnlThongTinTraCuuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlThongTinTraCuuMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlThongTinTraCuuMouseExited
