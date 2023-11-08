@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 
@@ -258,4 +259,38 @@ public class NhanVien_DAO {
 		}
 		
 	}
+//	public List<NhanVien> timKiemTheoTen(String ten) {
+//	    // Kết nối với cơ sở dữ liệu.
+//	    ConnectDB.getInstance();
+//	    Connection con = ConnectDB.getConnection();
+//
+//	    // Chuẩn bị câu truy vấn SQL.
+//	    String sql = "SELECT * FROM tbl_NhanVien WHERE TenNhanVien = ?";
+//	    PreparedStatement statement = con.prepareStatement(sql);
+//	    statement.setString(1, ten);
+//
+//	    // Thực thi câu truy vấn và lưu kết quả vào một ResultSet.
+//	    ResultSet resultSet = statement.executeQuery();
+//
+//	    // Tạo một danh sách để lưu trữ kết quả tìm kiếm.
+//	    List<NhanVien> danhSach = new ArrayList<>();
+//
+//	    // Duyệt qua các hàng trong ResultSet và thêm vào danh sách.
+//	    while (resultSet.next()) {
+//	        NhanVien nhanVien = new NhanVien();
+//	        nhanVien.setMaNhanVien(resultSet.getString("MaNV"));
+//	        nhanVien.setTenNhanVien(resultSet.getString("Ten"));
+//	        nhanVien.setGioiTinh(resultSet.getInt("GioiTinh"));
+//	        nhanVien.setNgaySinh(resultSet.getDate("NgaySinh"));
+//	        nhanVien.setDiaChi(resultSet.getString("DiaChi"));
+//	        nhanVien.setSoDienThoai(resultSet.getString("SoDienThoai"));
+//	        danhSach.add(nhanVien);
+//	    }
+//
+//	    // Đóng kết nối với cơ sở dữ liệu.
+//	    con.close();
+//
+//	    // Trả về danh sách kết quả tìm kiếm.
+//	    return danhSach;
+//	}
 }

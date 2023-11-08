@@ -301,7 +301,6 @@ public class JPanel_TraCuuNhanVien extends javax.swing.JPanel implements MouseLi
     public void lamMoi() {
     	txtTen.setText("");
     	txtCCCD.setText("");
-    	JDateNgaySinh.setDate(null);
     	txtSDT.setText("");
     	cbbGioiTinh.setSelectedIndex(0);
     	cbbChucVu.setSelectedIndex(0);
@@ -314,15 +313,6 @@ public class JPanel_TraCuuNhanVien extends javax.swing.JPanel implements MouseLi
 		// TODO Auto-generated method stub
 		int r = jTable1.getSelectedRow();
 		txtTen.setText(mode_NhanVien.getValueAt(r, 1).toString());
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = null;
-		try {
-			date = format.parse(mode_NhanVien.getValueAt(r, 2).toString());
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		JDateNgaySinh.setDate(date);
 		cbbGioiTinh.setSelectedItem(mode_NhanVien.getValueAt(r, 3));
 		txtCCCD.setText(mode_NhanVien.getValueAt(r, 4).toString());
 		cbbChucVu.setSelectedItem(mode_NhanVien.getValueAt(r, 5));
