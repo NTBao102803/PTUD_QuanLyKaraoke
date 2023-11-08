@@ -181,7 +181,7 @@ public class JPanel_DanhMucDichVu extends javax.swing.JPanel {
             }
         });
 
-        cmbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Còn", "Sắp hết" }));
+        cmbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Còn", "Sắp hết", "Ngừng Bán" }));
         cmbDonVi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thùng", "Lon" , "Chai" , "Bao" , "Dĩa", "Không"}));
         
         cmbTrangThai.setToolTipText("trạng thái");
@@ -451,6 +451,7 @@ public class JPanel_DanhMucDichVu extends javax.swing.JPanel {
 		cmbDonVi.setSelectedIndex(0);
 		cmbTrangThai.setSelectedIndex(0);
 		
+		loadDichVu();
 		txtTenDV.requestFocus();
 	}
     
@@ -475,19 +476,19 @@ public class JPanel_DanhMucDichVu extends javax.swing.JPanel {
 			return new DichVu(ma, tenDV, gia, soLuong, donVi, trangThai);
 	}
     
- // xóa dịch vụ
+    // xóa dịch vụ
  	public void deleteDichVu() {
  		int row = tblDSDichVu.getSelectedRow();
  		String maDV = txtMaDV.getText();
  		if (maDV.equals("")) {
- 			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ để xóa!");
+ 			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ không còn được sử dụng !");
  		} else {
- 			int choice = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa không ?", maDV,
+ 			int choice = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn thay đổi trạng thái không ?", maDV,
  					JOptionPane.YES_NO_CANCEL_OPTION);
  			if (choice == JOptionPane.YES_OPTION) {
- 				model_DichVu.removeRow(row);
- 				dichvu_dao.delete_DichVu(maDV);
- 				JOptionPane.showMessageDialog(null, "Xóa xong!");
+ 				
+ 				dichvu_dao.markDichVuAsNgungBan(maDV );
+ 				JOptionPane.showMessageDialog(null, "Dịch vụ đã không còn được sử dụng nữa !");
  				clear_DichVu();
  			} else {
  				JOptionPane.showMessageDialog(null, "Error!");
@@ -500,9 +501,10 @@ public class JPanel_DanhMucDichVu extends javax.swing.JPanel {
 		int row = tblDSDichVu.getSelectedRow();
 		if (txtMaDV.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "Bạn chưa chọn phòng để cập nhật thông tin!");
-		} else {
+		} else{
 			int choice = JOptionPane.showConfirmDialog(null, "Ban có chắc chắn muốn cập nhật không ?");
-			if (choice == JOptionPane.YES_OPTION) {
+			if (choice == JOptionPane.YES_OPTION ) {
+				if(ValidData()) {
 					String ma = txtMaDV.getText().trim();
 					DichVu p = update_DichVu(ma);
 //					model_Phong.setValueAt(p.getTenPhongHat(), row, 1);
@@ -514,12 +516,13 @@ public class JPanel_DanhMucDichVu extends javax.swing.JPanel {
 					loadDichVu();
 					clear_DichVu();
 					JOptionPane.showMessageDialog(null, "Cập nhật hoàn tất!");
+					}
 				}
 			}
 		
 	}
  	
- // cập nhật 1 dịch vụ
+ // lấy thông tin field để cập nhật 1 dịch vụ
  	public DichVu update_DichVu(String ma) {
  		String tenPhong = txtTenDV.getText().trim();
  		String donvi = cmbDonVi.getSelectedItem().toString();
@@ -547,8 +550,10 @@ public class JPanel_DanhMucDichVu extends javax.swing.JPanel {
 	
     public boolean ValidData() {
     	String tenDV = txtTenDV.getText().trim();
-    	float gia = Float.parseFloat(txtGiaDV.getText());
-    	int soLuong = Integer.parseInt(txtSoLuong.getText());
+//    	float gia = Float.parseFloat(txtGiaDV.getText());
+    	String gia = txtGiaDV.getText().trim();
+//    	int soLuong = Integer.parseInt(txtSoLuong.getText());
+    	String soLuong = txtSoLuong.getText().trim();
     	
 //    	if(tenDV.equals("") && String.valueOf(gia).isEmpty() && String.valueOf(soLuong).isEmpty()) {
 //    		JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin dịch vụ !");
@@ -558,7 +563,7 @@ public class JPanel_DanhMucDichVu extends javax.swing.JPanel {
     	
     	// check tên dịch vụ
     	if(tenDV.length() > 0 || !tenDV.equals("")) {
-    		if(!tenDV.matches("[A-Za-z]+")) {
+    		if(!tenDV.matches("^[\\p{L}]+( [\\p{L}]+)*$")) {
     			JOptionPane.showMessageDialog(this, "Error: Tên dịch vụ không hợp lệ ! Vui lòng nhập lại");
 				txtTenDV.requestFocus(true);
 				txtTenDV.setBorder(bdFalse);
@@ -574,16 +579,16 @@ public class JPanel_DanhMucDichVu extends javax.swing.JPanel {
     	}
     	
     	// check giá dịch vụ
-    	String giaDVText = txtGiaDV.getText().trim();
-    	if (giaDVText.isEmpty()) {
+//    	String giaDVText = txtGiaDV.getText().trim();
+    	if (gia.equals("")) {
     	    JOptionPane.showMessageDialog(this, "Error: Chưa nhập giá!");
     	    txtGiaDV.requestFocus();
     	    txtGiaDV.setBorder(bdFalse);
     	    return false;
     	}
     	String numberPattern = "^[0-9]+(\\.[0-9]+)?$"; // Biểu thức chính quy để kiểm tra số
-    	if (giaDVText.matches(numberPattern)) {
-    	    float giaDV = Float.parseFloat(giaDVText);
+    	if (gia.matches(numberPattern)) {
+    	    float giaDV = Float.parseFloat(gia);
     	    txtGiaDV.setBorder(bdTrue);
     	} else {
     	    JOptionPane.showMessageDialog(this, "Error: Giá không hợp lệ! Hãy nhập số.");
@@ -593,16 +598,16 @@ public class JPanel_DanhMucDichVu extends javax.swing.JPanel {
     	}
     	
     	// check số lượng
-    	String soLuongText = txtGiaDV.getText();
-    	if (soLuongText.isEmpty()) {
+//    	String soLuongText = txtGiaDV.getText();
+    	if (soLuong.equals("")) {
     	    JOptionPane.showMessageDialog(this, "Error: Chưa nhập số lượng!");
     	    txtSoLuong.requestFocus();
     	    txtSoLuong.setBorder(bdFalse);
     	    return false;
     	}
     	
-    	if (soLuongText.matches(numberPattern)) {
-    	    int soluong = Integer.parseInt(soLuongText);
+    	if (soLuong.matches(numberPattern)) {
+    	    int soluong = Integer.parseInt(soLuong);
     	    txtSoLuong.setBorder(bdTrue);
     	} else {
     	    JOptionPane.showMessageDialog(this, "Error: Giá không hợp lệ! Hãy nhập số.");

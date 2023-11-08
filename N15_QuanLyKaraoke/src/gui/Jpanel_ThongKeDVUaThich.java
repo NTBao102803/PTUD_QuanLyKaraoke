@@ -6,6 +6,7 @@ package gui;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -52,42 +53,42 @@ public class Jpanel_ThongKeDVUaThich extends javax.swing.JPanel {
             .addGap(0, 132, Short.MAX_VALUE)
         );
 
-        tblDVUaThich.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Mã Dịch Vụ ", "Tên Dịch Vụ", "Giá Dịch Vụ ", "Trạng Thái ", "Số Lượng Khách Hàng Sử Dụng", "Tỷ Lệ Khách Hàng Sử Dụng", "Ghi Chú"
-            }
+        tblDVUaThich.setModel(new DefaultTableModel(
+        	new Object[][] {
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        		{null, null, null, null},
+        	},
+        	new String[] {
+        		"M\u00E3 D\u1ECBch V\u1EE5 ", "T\u00EAn D\u1ECBch V\u1EE5", "Gi\u00E1 D\u1ECBch V\u1EE5 ", "S\u1ED1 L\u01B0\u1EE3ng Kh\u00E1ch H\u00E0ng S\u1EED D\u1EE5ng"
+        	}
         ));
         tblDVUaThich.setShowGrid(true);
         jScrollPane1.setViewportView(tblDVUaThich);

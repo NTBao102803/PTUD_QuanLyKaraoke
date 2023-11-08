@@ -16,16 +16,21 @@ import entity.PhongHat;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonModel;
 import javax.swing.GroupLayout;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.Border;
 import javax.swing.plaf.ColorChooserUI;
 
 /**
@@ -182,7 +187,8 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
         btnCapNhat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	edit_KhachHang();
+//            	edit_KhachHang();
+            	updateKhachHang();
             }
         });
 
@@ -413,7 +419,7 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
         		.addGroup(layout.createSequentialGroup()
         			.addGap(16)
         			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(pnlDSKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(pnlDSKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1194, Short.MAX_VALUE)
         				.addComponent(pnlThongTinKhachHang, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1194, GroupLayout.PREFERRED_SIZE))
         			.addGap(40))
         );
@@ -422,9 +428,9 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
         		.addGroup(layout.createSequentialGroup()
         			.addGap(14)
         			.addComponent(pnlThongTinKhachHang, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        			.addGap(18)
-        			.addComponent(pnlDSKhachHang, GroupLayout.PREFERRED_SIZE, 388, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(88, Short.MAX_VALUE))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addComponent(pnlDSKhachHang, GroupLayout.PREFERRED_SIZE, 433, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(75, Short.MAX_VALUE))
         );
         this.setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
@@ -476,6 +482,7 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
     
     // thêm khách hàng
  	private void addnew_KhachHang() {
+ 		if(ValidData()) {
  			KhachHang kh = revertKhachHang();
  			khachHang_dao.addKhachHang(kh);
  			JOptionPane.showMessageDialog(this, "Thêm thành công!");
@@ -483,6 +490,7 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
  			model_KhachHang.setRowCount(0);
  			loadKhachHang();
  			clear_KhachHang();
+ 		}
  	}
  	
  	
@@ -516,51 +524,126 @@ public class JPanel_DanhMucKhachHang extends javax.swing.JPanel {
 	}
     
 	// cập nhật khách hàng
-	public void edit_KhachHang() {
-		int row = tblDSKhachHang.getSelectedRow();
-		if (txtMaKH.getText().equals("")) {
-			JOptionPane.showMessageDialog(this, "Bạn chưa chọn khách hàng để cập nhật thông tin!");
-		} else {
-			int choice = JOptionPane.showConfirmDialog(null, "Ban có chắc chắn muốn cập nhật không ?");
-			if (choice == JOptionPane.YES_OPTION) {
-					String ma = txtMaKH.getText().trim();
-					KhachHang kh = update_KhachHang(ma);
-//					model_Phong.setValueAt(p.getTenPhongHat(), row, 1);
-//					model_Phong.setValueAt(p.getLoaiPhong().getTenLoaiPhong(), row, 2);
-//					model_Phong.setValueAt(p.getGiaPhong(), row, 3);
-//					model_Phong.setValueAt(p.getTinhTrang(), row, 4);
-//					model_Phong.setValueAt(p.getSucChua(), row, 5);
-					khachHang_dao.capNhat_KhachHang(kh);
-					loadKhachHang();
-					clear_KhachHang();
-					JOptionPane.showMessageDialog(null, "Cập nhật hoàn tất!");
-				}
-			}
-		
+	public void updateKhachHang() {
+	    try {
+	    	if(ValidData()) {
+	    		 // Lấy thông tin từ trường nhập liệu và nút radio
+		        String maKhachHang = txtMaKH.getText().trim();
+		        String tenKhachHang = txtTenKH.getText().trim();
+		        String soDienThoai = txtSoDienThoai.getText().trim();
+		        String cccd = txtCCCD.getText().trim();
+		        
+		        radNam.setActionCommand("1");
+        		radNu.setActionCommand("0");
+		        int gioiTinh = 1; // Mặc định giới tính là 1 - Nam nếu không có nút radio được chọn.
+		        ButtonModel selectedButton = buttonGroup1.getSelection();
+		        if (selectedButton != null) {
+		        	String gioiTinhString = selectedButton.getActionCommand();
+		        	if (gioiTinhString != null && !gioiTinhString.isEmpty()) {
+		        	    gioiTinh = Integer.parseInt(gioiTinhString);
+		        	}
+		        }
+		        
+		        String diaChi = txtDiaChi.getText().trim();
+
+		        // Gọi phương thức cập nhật khách hàng trong lớp DAO
+//		        KhachHangDAO khachHangDAO = new KhachHangDAO(); // Thay thế bằng tên lớp DAO của bạn
+		        KhachHang khachHang = new KhachHang(maKhachHang, tenKhachHang, soDienThoai, cccd, gioiTinh, diaChi);
+		        
+		        khachHang_dao.capNhat_KhachHang(khachHang);
+		        // Cập nhật lại dữ liệu hiển thị
+		        loadKhachHang(); // Thay thế bằng cách nạp lại danh sách khách hàng từ cơ sở dữ liệu
+		        clear_KhachHang(); // Đặt lại trường nhập liệu
+
+		        JOptionPane.showMessageDialog(this, "Cập nhật khách hàng thành công!");
+	    	}
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật khách hàng: " + e.getMessage());
+	    }
 	}
-	
-	// cập nhật 1 khách hàng
-	 	public KhachHang update_KhachHang(String ma) {
+    
+	 // border - thông báo lỗi nhập liệu
+	    Border bdFalse = BorderFactory.createLineBorder(Color.red);
+		Border bdTrue = BorderFactory.createLineBorder(Color.green);
+	 	public boolean ValidData() {
 	 		String tenKH = txtTenKH.getText().trim();
 	 		String sdt = txtSoDienThoai.getText().trim();
 	 		String cccd = txtCCCD.getText().trim();
-	 		ButtonModel selectedButton = buttonGroup1.getSelection();
-	 		int gioiTinh = 0;
-	 		if (selectedButton != null) {
-	 		    String gioiTinhString = selectedButton.getActionCommand();
-	 		    gioiTinh = Integer.parseInt(gioiTinhString);
-
-	 		    // Sau đó, bạn có thể sử dụng giá trị gioiTinh bình thường.
-	 		} else {
-	 		    // Xử lý trường hợp không có nút radio nào được chọn.
-	 		    // Có thể thông báo cho người dùng hoặc thực hiện xử lý khác theo nhu cầu.
-	 		}
-	 		
 	 		String diaChi = txtDiaChi.getText().trim();
 	 		
-	 		return new KhachHang(ma, tenKH, sdt, cccd, gioiTinh , diaChi);
+	 		// Check tên khách hàng
+	 		if(tenKH.length() > 0 || !tenKH.equals("")) {
+	 			if(!tenKH.matches("^[\\p{L}]+( [\\p{L}]+)*$")) {
+	    			JOptionPane.showMessageDialog(this, "Error: Tên Khách hàng không hợp lệ ! Vui lòng nhập lại");
+					txtTenKH.requestFocus(true);
+					txtTenKH.setBorder(bdFalse);
+					return false;
+	    		}else {
+	    			txtTenKH.setBorder(bdTrue);
+	    		}
+	 		}else {
+	 			JOptionPane.showMessageDialog(this, "Error: Chưa nhập tên khách hàng !");
+				txtTenKH.requestFocus(true);
+				txtTenKH.setBorder(bdFalse);
+				return false;
+	 		}
+	 		
+	 	// Check địa chỉ
+	 		if(diaChi.length() > 0 || !diaChi.equals("")) {
+	 			if(!diaChi.matches("^[\\p{L}]+( [\\p{L}]+)*$")) {
+	    			JOptionPane.showMessageDialog(this, "Error: Địa Chỉ không hợp lệ ! Vui lòng nhập lại");
+					txtDiaChi.requestFocus(true);
+					txtDiaChi.setBorder(bdFalse);
+					return false;
+	    		}else {
+	    			txtDiaChi.setBorder(bdTrue);
+	    		}
+	 		}else {
+	 			JOptionPane.showMessageDialog(this, "Error: Chưa nhập địa chỉ !");
+				txtDiaChi.requestFocus(true);
+				txtDiaChi.setBorder(bdFalse);
+				return false;
+	 		}
+	 		
+	 		
+	 		// check số điện thoại
+	 		if((sdt.length() > 10 && sdt.length() < 12) || !sdt.equals("")) {
+	 			if(!sdt.matches("^0[0-9]{9}+$")) {
+	    			JOptionPane.showMessageDialog(this, "Error: Số Điện Thoại không hợp lệ ! Vui lòng nhập lại");
+					txtSoDienThoai.requestFocus(true);
+					txtSoDienThoai.setBorder(bdFalse);
+					return false;
+	    		}else {
+	    			txtSoDienThoai.setBorder(bdTrue);
+	    		}
+	 		}else {
+	 			JOptionPane.showMessageDialog(this, "Error: Chưa nhập số điện thoại !");
+				txtSoDienThoai.requestFocus(true);
+				txtSoDienThoai.setBorder(bdFalse);
+				return false;
+	 		}
+	 		
+	 	// check căn cước công dân
+	 		if(cccd.length() == 12 || !cccd.equals("")) {
+	 			if(!cccd.matches("^0[0-9]{11}+$")) {
+	    			JOptionPane.showMessageDialog(this, "Error: Căn cước công dân không hợp lệ ! Vui lòng nhập lại");
+					txtCCCD.requestFocus(true);
+					txtCCCD.setBorder(bdFalse);
+					return false;
+	    		}else {
+	    			txtCCCD.setBorder(bdTrue);
+	    		}
+	 		}else {
+	 			JOptionPane.showMessageDialog(this, "Error: Chưa nhập căn cước công dân !");
+				txtCCCD.requestFocus(true);
+				txtCCCD.setBorder(bdFalse);
+				return false;
+	 		}
+	 		
+	 		return true;
+	 		
 	 	}
-    
     
     // phát sinh mã khách hàng
 	public String generateCode() {

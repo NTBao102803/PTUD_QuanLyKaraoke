@@ -212,6 +212,10 @@ public class JPanel_TraCuuDichVu extends javax.swing.JPanel {
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+            @Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Không cho phép chỉnh sửa bất kỳ ô nào trên bảng
+			}
         });
         jScrollPane1.setViewportView(jTableDichVu);
 

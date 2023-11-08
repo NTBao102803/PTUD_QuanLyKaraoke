@@ -91,27 +91,31 @@ public class DichVu_DAO {
 				}
 				return 0;
 			}
-			//Xóa Dịch vụ trên SQL
-			public boolean delete_DichVu(String ma) {
-				ConnectDB.getInstance();
-				Connection con = ConnectDB.getConnection();
-				PreparedStatement stmt = null;
-				int n = 0;
-				try {
-					stmt = con.prepareStatement("DELETE FROM tbl_DichVu WHERE MaDichVu =?");
-					stmt.setString(1, ma);
-					n = stmt.executeUpdate();
-				} catch (SQLException e) {
-							
-				} finally {
-					try {
-						stmt.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				}
-				return n > 0;
+			
+			// thay đổi trạng thái của dịch vụ
+			public boolean markDichVuAsNgungBan(String maDichVu) {
+			    ConnectDB.getInstance();
+			    Connection con = ConnectDB.getConnection();
+			    PreparedStatement stmt = null;
+			    int n = 0;
+			    try {
+			        stmt = con.prepareStatement("UPDATE tbl_DichVu SET TrangThai = N'Ngừng Bán' WHERE MaDichVu = ?");
+			        stmt.setString(1, maDichVu);
+			        n = stmt.executeUpdate();
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    } finally {
+			        try {
+			            stmt.close();
+			        } catch (SQLException e) {
+			            e.printStackTrace();
+			        }
+			    }
+			    return n > 0;
 			}
+
+
+
 			//Cập nhật thông tin Dịch vụ
 			public void capNhat_DichVu(DichVu dv) {
 				ConnectDB.getInstance();

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import connectDB.ConnectDB;
 import entity.KhachHang;
@@ -125,8 +126,7 @@ public class KhachHang_DAO {
 				stmt.setString(3, kh.getCCCD());
 				stmt.setInt(4, kh.getGioiTinh());
 				stmt.setString(5, kh.getDiaChi());
-//				stmt.setInt(6, kh.getSoLanSuDung());
-				stmt.setString(7, kh.getMaKhachHang());
+				stmt.setString(6, kh.getMaKhachHang());
 				stmt.executeUpdate();
 			} catch (SQLException e) {
 				// TODO: handle exception
@@ -139,6 +139,73 @@ public class KhachHang_DAO {
 				}
 			}
 		}
+		
+			// tìm kiếm thông tin khách hàng
+		 	public List<KhachHang> searchKhachHangByTen(String ten) {
+		        return searchKhachHang(ten, null, -1);
+		    }
+
+		    public List<KhachHang> searchKhachHangBySoDienThoai(String soDienThoai) {
+		        return searchKhachHang(null, soDienThoai, -1);
+		    }
+
+		    public List<KhachHang> searchKhachHangByGioiTinh(int gioiTinh) {
+		        return searchKhachHang(null, null, gioiTinh);
+		    }
+
+		    public List<KhachHang> searchKhachHang(String ten, String soDienThoai, int gioiTinh) {
+		        List<KhachHang> result = new ArrayList<>();
+
+		        Connection con = null;
+		        PreparedStatement stmt = null;
+		        ResultSet rs = null;
+
+		        try {
+		            con = ConnectDB.getConnection();
+
+		            // Bắt đầu xây dựng câu truy vấn SQL dựa trên các thông tin đầu vào
+		            String sql = "SELECT * FROM tbl_KhachHang WHERE 1=1"; // 1=1 để tạo điều kiện AND dễ dàng
+
+		            if (ten != null && !ten.isEmpty()) {
+		                sql += " AND (TenKhachHang LIKE ?)";
+		            }
+		            if (soDienThoai != null && !soDienThoai.isEmpty()) {
+		                sql += " AND (SoDienThoai LIKE ?)";
+		            }
+		            if (gioiTinh >= 0) {
+		                sql += " AND GioiTinh = ?";
+		            }
+
+		            stmt = con.prepareStatement(sql);
+		            int parameterIndex = 1; // Số thứ tự của tham số
+
+		            if (ten != null && !ten.isEmpty()) {
+		            	  stmt.setString(parameterIndex, "%" + ten + "%");
+		                  parameterIndex++;
+		            }
+		            if (soDienThoai != null && !soDienThoai.isEmpty()) {
+		            	 stmt.setString(parameterIndex, "%" + soDienThoai + "%");
+		                parameterIndex++;
+		            }
+		            if (gioiTinh >= 0) {
+		                stmt.setInt(parameterIndex, gioiTinh);
+		            }
+
+		            rs = stmt.executeQuery();
+
+		            while (rs.next()) {
+		                // Xử lý dữ liệu từ ResultSet và thêm vào danh sách kết quả
+		                KhachHang kh = new KhachHang(rs.getString("MaKhachHang"), rs.getString("TenKhachHang"), rs.getString("SoDienThoai"), rs.getString("CCCD"), rs.getInt("GioiTinh"), rs.getString("DiaChi"));
+		                result.add(kh);
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        } finally {
+		        }
+
+		        return result;
+		    }
+
 }
 
 

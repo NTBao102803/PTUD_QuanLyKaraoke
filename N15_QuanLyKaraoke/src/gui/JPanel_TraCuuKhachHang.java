@@ -7,6 +7,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -95,7 +96,7 @@ public class JPanel_TraCuuKhachHang extends javax.swing.JPanel {
         btnLamMoi.setBorder(null);
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLamMoiActionPerformed(evt);
+            	clear_KhachHang();
             }
         });
 
@@ -104,6 +105,11 @@ public class JPanel_TraCuuKhachHang extends javax.swing.JPanel {
         btnTimKiem.setText("Tìm Kiếm");
         btnTimKiem.setToolTipText("Tìm kiếm");
         btnTimKiem.setBorder(null);
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	xuLySuKienTimKiem();
+            }
+        });
 
         javax.swing.GroupLayout pnlThongTinTraCuuLayout = new javax.swing.GroupLayout(pnlThongTinTraCuu);
         pnlThongTinTraCuu.setLayout(pnlThongTinTraCuuLayout);
@@ -197,7 +203,7 @@ public class JPanel_TraCuuKhachHang extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Khách Hàng", "Tên Khách Hàng", "Số Điện Thoại", "Căn Cước Công Dân", "Giới Tính", "Địa Chỉ","Số Lần Sử Dụng"
+                "Mã Khách Hàng", "Tên Khách Hàng", "Số Điện Thoại", "Căn Cước Công Dân", "Giới Tính", "Địa Chỉ"
             }
         ) {
             Class[] types = new Class [] {
@@ -207,6 +213,10 @@ public class JPanel_TraCuuKhachHang extends javax.swing.JPanel {
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+            @Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Không cho phép chỉnh sửa bất kỳ ô nào trên bảng
+			}
         });
         tblDSKhachHang.setFocusable(false);
         tblDSKhachHang.setShowGrid(true);
@@ -262,14 +272,98 @@ public class JPanel_TraCuuKhachHang extends javax.swing.JPanel {
     }//GEN-LAST:event_radNamActionPerformed
     
     public void loadKhachHang() {
+    	String gioitinh = "";
     	model_KhachHang.setRowCount(0);
 		listKhachHang = khachHang_dao.getAllKhachHang();
 		for (KhachHang kh : listKhachHang) {
+			if(kh.getGioiTinh() == 1) {
+				gioitinh = "Nam";
+			}else {
+				gioitinh = "Nữ";
+			}
 			model_KhachHang.addRow(new Object[] { 
 					kh.getMaKhachHang(), kh.getTenKhachHang(), kh.getSoDienThoai(), kh.getCCCD(),
-					kh.getGioiTinh(), kh.getDiaChi()});
+					gioitinh, kh.getDiaChi()});
 		}
 	}
+    
+    public void clear_KhachHang() {
+		txtTenKH.setText("");
+		txtSoDienThoai.setText("");
+		buttonGroup1.setSelected(radNam.getModel(), true);
+		
+		loadKhachHang();
+		txtTenKH.requestFocus();
+		
+    }
+    
+    public List<KhachHang> timKiemKhachHang() {
+        String ten = txtTenKH.getText().trim();
+        String soDienThoai = txtSoDienThoai.getText().trim();
+        int gioiTinh = getSelectedGioiTinh(); // Hàm này phải tự viết để lấy giới tính từ UI
+
+        List<KhachHang> ketQuaTimKiem = new ArrayList<>();
+
+        // Gọi các hàm tìm kiếm trong lớp DAO để tìm kiếm khách hàng
+        if (!ten.isEmpty()) {
+            List<KhachHang> ketQuaTen = khachHang_dao.searchKhachHangByTen(ten);
+            for (KhachHang kh : ketQuaTen) {
+                if (!ketQuaTimKiem.contains(kh)) {
+                    ketQuaTimKiem.add(kh);
+                }
+            }
+        }
+        if (!soDienThoai.isEmpty()) {
+            List<KhachHang> ketQuaSDT = khachHang_dao.searchKhachHangBySoDienThoai(soDienThoai);
+            for (KhachHang kh : ketQuaSDT) {
+                if (!ketQuaTimKiem.contains(kh)) {
+                    ketQuaTimKiem.add(kh);
+                }
+            }
+        }
+        if (gioiTinh == 0 || gioiTinh == 1) {
+            List<KhachHang> ketQuaGioiTinh = khachHang_dao.searchKhachHangByGioiTinh(gioiTinh);
+            for (KhachHang kh : ketQuaGioiTinh) {
+                if (!ketQuaTimKiem.contains(kh)) {
+                    ketQuaTimKiem.add(kh);
+                }
+            }
+        }
+
+        return ketQuaTimKiem;
+    }
+
+    
+    private int getSelectedGioiTinh() {
+        int gioiTinh = 1; // Gán giá trị mặc định là Nam khi không chọn button
+        if (radNam.isSelected()) {
+            gioiTinh = 1; // Giả sử chọn giới tính Nam
+        } else if (radNu.isSelected()) {
+            gioiTinh = 0; // Giả sử chọn giới tính Nữ
+        }
+        return gioiTinh;
+    }
+    public void capNhatBangHienThi(List<KhachHang> danhSachKetQua) {
+    	String gioitinh = "";
+        DefaultTableModel model = (DefaultTableModel) tblDSKhachHang.getModel();
+        model.setRowCount(0); // Xóa tất cả dữ liệu hiện tại trong bảng
+
+        for (KhachHang kh : danhSachKetQua) {
+        	if(kh.getGioiTinh() == 1) {
+				gioitinh = "Nam";
+			}else {
+				gioitinh = "Nữ";
+			}
+			model_KhachHang.addRow(new Object[] { 
+					kh.getMaKhachHang(), kh.getTenKhachHang(), kh.getSoDienThoai(), kh.getCCCD(),
+					gioitinh, kh.getDiaChi()});
+		
+        }
+    }
+    public void xuLySuKienTimKiem() {
+        List<KhachHang> ketQuaTimKiem = timKiemKhachHang();
+        capNhatBangHienThi(ketQuaTimKiem);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
