@@ -284,7 +284,6 @@ public class JPanel_TraCuuPhong extends javax.swing.JPanel {
 		jComboBoxTinhTrang.setSelectedIndex(0);
 		jComboBoxSucChua.setSelectedIndex(0);
 		jTextFieldGiaPhong.setText("");
-//		jTextFieldGiaPhong.setBorder(null);
 	}
 	// tìm kiếm phòng
 	public void timKiem() {
